@@ -11,40 +11,41 @@ const HEIGHT = 6;
 const currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
-
+// makeBoard function to create in-memory game board structure and determine movement 
+// board = array of rows, each row is array of cells (board[y][x])
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-}
+  // COMPLETE - TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  for (let y=0; y<HEIGHT; y++) { // loop to build board, y (vertical) axis, 6 arrays
+    console.log(y)
+    board.push(Array.from({ length: WIDTH }));  // Use Array.from method to push horizonal axis
+  }
+};
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-
 function makeHtmlBoard() {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  // COMPLETE - TODO: get "htmlBoard" variable from the item in HTML w/ID of "board" 
+  const htmlBoard = document.querySelector('#board'); // Get the html element w/ID of 'board', assign to htmlBoard variable
+  // COMPLETE - TODO: add comment for this code 
+  const top = document.createElement("tr"); // Create tr element, assign to top variable - Where game pieces will 'drop' from
+  top.setAttribute("id", "column-top"); // Set an ID of 'column-top' to tr(top) element
+  top.addEventListener("click", handleClick); // Add click listener to tr(top) element to call the handleClick function
 
-  // TODO: add comment for this code
-  const top = document.createElement("tr");
-  top.setAttribute("id", "column-top");
-  top.addEventListener("click", handleClick);
-
-  for (let x = 0; x < WIDTH; x++) {
-    const headCell = document.createElement("td");
-    headCell.setAttribute("id", x);
-    top.append(headCell);
+  for (let x = 0; x < WIDTH; x++) { // iterate over the game table rows and cells 
+    const headCell = document.createElement("td"); // create td elements, assign to headCell variable
+    headCell.setAttribute("id", x); // Add an ID of 0-6 to each headCell
+    top.append(headCell); // Append headCell to top(tr)
   }
-  htmlBoard.append(top);
+  htmlBoard.append(top); // Append top(tr) to the htmlBoard(table)
 
-  // TODO: add comment for this code
-  for (let y = 0; y < HEIGHT; y++) {
-    const row = document.createElement("tr");
-    for (let x = 0; x < WIDTH; x++) {
-      const cell = document.createElement("td");
-      cell.setAttribute("id", `${y}-${x}`);
-      row.append(cell);
+  // COMPLETE - TODO: add comment for this code
+  for (let y = 0; y < HEIGHT; y++) { // Loop to create row based on HEIGHT variable
+    const row = document.createElement("tr"); // Create tr elements, row variable
+    for (let x = 0; x < WIDTH; x++) { // Loop to create game cells based on WIDTH variable
+      const cell = document.createElement("td"); // create td elements, cell variable
+      cell.setAttribute("id", `${y}-${x}`); // add IDs to cells, y (0-5), x (0-6)
+      row.append(cell); // append cells to rows (tr elements)
     }
-    htmlBoard.append(row);
+    htmlBoard.append(row);  // append rows to htmlBoard (table)
   }
 }
 
@@ -56,9 +57,13 @@ function findSpotForCol(x) {
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
-
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
+  // COMPLETE - TODO: make a div and insert into correct table cell
+  const piece = document.createElement('div'); // create the game play piece (div element)
+  piece.classList.add('piece');
+  currPlayer === 1 ? piece.classList.add('p1') : piece.classList.add('p2'); // Use ternary operator to apply p1 or p2 class based on currPlayer val
+  const cell = document.getElementById(`${y}-${x}`); // grab the table cell by y-x id coordinates built in makeHthmlBoard() 
+  cell.append(piece); // append the play piece to the cell
 }
 
 /** endGame: announce game end */
@@ -68,7 +73,6 @@ function endGame(msg) {
 }
 
 /** handleClick: handle click of column top to play piece */
-
 function handleClick(evt) {
   // get x from ID of clicked cell
   const x = +evt.target.id;
