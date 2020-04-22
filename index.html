@@ -4,13 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
   <title>Connect Four!</title>
 </head>
 <body>
   <header>
     <h1>Connect Four</h1>
-
   </header>
+
+  <div id="game-info">
+    <div id="player1" class="active-player">
+      <span>Player1</span>
+    </div>
+    <button id="reset-button">Start Over</button>
+    <div id="player2">
+      <span>Player2</span>
+    </div>
+
+  </div>
 
   <div id="game">
     <table id="board"></table>

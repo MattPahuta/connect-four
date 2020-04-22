@@ -3,8 +3,8 @@
 }
 
 body {
-  background-color: rgb(165, 204, 191);
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(235, 244, 247);
+  font-family: 'Roboto', sans-serif;
 }
 
 header {
@@ -13,38 +13,98 @@ header {
   justify-content: center;
 }
 
+h1 {
+  color: #00bdaa;
+  font-size: 2.8rem;
+  text-transform: uppercase;
+}
+
+#game-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+#player1 {
+  background-color: #400082;
+  color: #fff;
+  padding: 12px 12px;
+  border-radius: 20px;
+}
+
+#player2 {
+  background-color: #fe346e;
+  color: #fff;
+  padding: 12px 12px;
+  border-radius: 20px;
+}
+
+.active-player {
+  border: 8px solid gold;
+}
+
+button {
+  cursor: pointer;
+  background-color: rgb(140, 167, 45);
+  border: 2px solid rgb(140, 167, 45);
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+button:hover {
+  background-color: #f1e7b6;
+  border: 2px solid #f1e7b6;
+}
+
 /* game board table */
 
+div#game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #board td {
-  width: 50px;
-  height: 50px;
-  border: solid 1px #666;
+  width: 65px;
+  height: 65px;
+  border: solid 2px #00bdaa;
+  border-radius: 5%;
+}
+
+#player1 {
+  
 }
 
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
-  /* TODO: make into circles */
+  /* COMPLETE - TODO: make into circles */
   border-radius: 50%;
   margin: 5px;
   width: 80%;
   height: 80%;
 }
 
-/* TODO: make pieces red/blue,  depending on player 1/2 piece */
+/* COMPLETE - TODO: make pieces red/blue,  depending on player 1/2 piece */
 .p1 {
-  background-color: blue;
+  background-color: #400082;
 }
 
 .p2 {
-  background-color: red;
+  background-color: #fe346e
 }
+
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
-  border: dashed 1px lightgray;
+  border: dashed 2px lightgray;
 }
 
 #column-top td:hover {
-  background-color: gold;
+  background-color: #f1e7b6;
 }

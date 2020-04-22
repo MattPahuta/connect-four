@@ -1,19 +1,25 @@
-console.log('Connect Four Scripts Connected');
+document.addEventListener('DOMContentLoaded', () => { // Add DOMContentLoaded event listener to wrap all code
+  console.log('DOM fully loaded and parsed');
 /** Connect Four
  *
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
-
 const WIDTH = 7;
 const HEIGHT = 6;
-let currPlayer = 1; // active player: 1 or 2
+let currPlayer = 1; // active player: 1 or 2 - Player 1 begins game
+const playerOne = document.querySelector('#player1'); // player 1 div
+const playerTwo = document.querySelector('#player2'); // player 2 div
+console.log(`Current Player is: ${currPlayer}`);
 const board = []; // array of rows, each row is array of cells  (board[y][x])
+const resetButton = document.querySelector('#reset-button');
+// Simple page reset for reload/start over button
+resetButton.addEventListener('click', () => location.reload());
 
 // makeBoard function to create in-memory game board structure and determine movement 
 // board = array of rows, each row is array of cells (board[y][x])
-function makeBoard() {
+const makeBoard = () => { // convert to arrow function
   // COMPLETE - TODO: set "board" to empty HEIGHT x WIDTH matrix array
   for (let y = 0; y < HEIGHT; y++) { // loop to build board, y (vertical) axis, 6 arrays
     // console.log('y is: ', y+1) // log to confirm understanding of y variable, confirm correct num of y (6)
@@ -22,7 +28,7 @@ function makeBoard() {
 };
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-function makeHtmlBoard() {
+const makeHtmlBoard = () => {
   // COMPLETE - TODO: get "htmlBoard" variable from the item in HTML w/ID of "board" 
   const htmlBoard = document.querySelector('#board'); // Get the html element w/ID of 'board', assign to htmlBoard variable
   // COMPLETE - TODO: add comment for this code 
@@ -50,19 +56,21 @@ function makeHtmlBoard() {
   }
 }
 
+
+
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  for (let y = HEIGHT - 1; y >= 0; y--){
-    if (!board[y][x]) {
+const findSpotForCol = (x) => {
+  // COMPLETE - TODO: write the real version of this, rather than always returning 0
+  for (let y = HEIGHT - 1; y >= 0; y--){ // iterate over column, top to bottom, look for empty y
+    if (!board[y][x]) { // if cell in column false, return y
       return y;
     }
   }
-  return null;
+  return null; // return null if column is filled
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
-function placeInTable(y, x) {
+const placeInTable = (y, x) => {
   // COMPLETE - TODO: make a div and insert into correct table cell
   const piece = document.createElement('div'); // create the game play piece (div element)
   piece.classList.add('piece');
@@ -72,16 +80,17 @@ function placeInTable(y, x) {
 }
 
 /** endGame: announce game end */
-function endGame(msg) {
+const endGame = (msg) => {
   // COMPLETE - TODO: pop up alert message
-  setTimeout(() => {
+  setTimeout(() => { // Add delay for win message to allow for winning drop to complete
     alert(msg)
-  }, 300)
-  
+  }, 200)
+  // Remove the event listener from top table column to prevent additional moves after win:
+  document.querySelector('#column-top').removeEventListener('click', handleClick);
 }
 
 /** handleClick: handle click of column top to play piece */
-function handleClick(evt) {
+const handleClick = (evt) => {
   // get x from ID of clicked cell
   const x = +evt.target.id;
   // get next spot in column (if none, ignore click)
@@ -91,11 +100,11 @@ function handleClick(evt) {
   }
   // place piece in board and add to HTML table
   // COMPLETE - TODO: add line to update in-memory board
-  board[y][x] = currPlayer;
-  placeInTable(y, x);
+  board[y][x] = currPlayer; // lock in the player piece based on board row coordinates
+  placeInTable(y, x); // call placeInTable function to update the DOM with piece location
   // check for win
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    return endGame(`Player ${currPlayer} wins!`);
   }
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
@@ -105,13 +114,21 @@ function handleClick(evt) {
   // switch players
   // COMPLETE - TODO: switch currPlayer 1 <-> 2
   (currPlayer === 1) ? currPlayer = 2 : currPlayer = 1; // Use ternary function to switch the current player
-  
+  // Add simple player identiy switching logic:
+  if (currPlayer === 2){
+    playerOne.classList.remove('active-player');
+    playerTwo.classList.add('active-player')
+  } else {
+    playerOne.classList.add('active-player');
+    playerTwo.classList.remove('active-player');
+  }
+  console.log(`Current Player is: ${currPlayer}`) // log to confirm switch player working properly
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
-
-function checkForWin() {
-  function _win(cells) {
+const checkForWin = () => {
+  const _win = (cells) => {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
@@ -164,3 +181,5 @@ function checkForWin() {
 
 makeBoard();
 makeHtmlBoard();
+
+});
