@@ -12,21 +12,25 @@
     <h1>Connect Four</h1>
   </header>
 
-  <div id="game-info">
-    <div id="player1" class="active-player">
-      <span>Player1</span>
+  <section id="game-container">
+    <div id="game-info">
+      <div id="player1" class="active-player">
+        Player One
+      </div>
+
+      <button id="reset-button">Start Over</button>
+
+      <div id="player2">
+        Player Two
+      </div>
+
     </div>
-    <button id="reset-button">Start Over</button>
-    <div id="player2">
-      <span>Player2</span>
+
+    <div id="game">
+      <table id="board"></table>
     </div>
-
-  </div>
-
-  <div id="game">
-    <table id="board"></table>
-  </div>
-
+  </section>
+  
   <script src="app.js"></script>
 </body>
 </html>

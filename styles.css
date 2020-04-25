@@ -3,8 +3,13 @@
 }
 
 body {
-  background-color: rgb(235, 244, 247);
+  background-color: #ececec;
   font-family: 'Roboto', sans-serif;
+}
+
+#game-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 header {
@@ -14,8 +19,8 @@ header {
 }
 
 h1 {
-  color: #00bdaa;
-  font-size: 2.8rem;
+  color: #303841;
+  font-size: 3rem;
   text-transform: uppercase;
 }
 
@@ -24,30 +29,32 @@ h1 {
   align-items: center;
   justify-content: space-evenly;
   margin-bottom: 20px;
+  padding: 20px 20px;
 }
 
 #player1 {
-  background-color: #400082;
-  color: #fff;
-  padding: 12px 12px;
+  background-color: #00adb5;
+  /* color: #fff; */
+  padding: 24px 12px;
   border-radius: 20px;
 }
 
 #player2 {
-  background-color: #fe346e;
-  color: #fff;
-  padding: 12px 12px;
+  background-color: #ff5722;
+  /* color: #fff; */
+  padding: 24px 12px;
   border-radius: 20px;
 }
 
 .active-player {
-  border: 8px solid gold;
+  color: #ffd31d;
+  font-weight: 700;
 }
 
 button {
   cursor: pointer;
-  background-color: rgb(140, 167, 45);
-  border: 2px solid rgb(140, 167, 45);
+  background-color: #303841;
+  border: 2px solid #303841;
   border-radius: 4px;
   color: #fff;
   font-weight: 700;
@@ -57,8 +64,9 @@ button {
 }
 
 button:hover {
+  color: #303841;
   background-color: #f1e7b6;
-  border: 2px solid #f1e7b6;
+  border: 2px solid #303841;
 }
 
 /* game board table */
@@ -72,12 +80,8 @@ div#game {
 #board td {
   width: 65px;
   height: 65px;
-  border: solid 2px #00bdaa;
+  border: solid 2px #303841;
   border-radius: 5%;
-}
-
-#player1 {
-  
 }
 
 /* pieces are div within game table cells: draw as colored circles */
@@ -92,17 +96,17 @@ div#game {
 
 /* COMPLETE - TODO: make pieces red/blue,  depending on player 1/2 piece */
 .p1 {
-  background-color: #400082;
+  background-color: #00adb5;
 }
 
 .p2 {
-  background-color: #fe346e
+  background-color: #ff5722;
 }
 
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
-  border: dashed 2px lightgray;
+  border: dashed 2px #dbdbdb;
 }
 
 #column-top td:hover {

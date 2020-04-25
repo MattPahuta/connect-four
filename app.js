@@ -59,6 +59,7 @@ const makeHtmlBoard = () => {
 
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
+// Note: This gave me some trouble for sure...
 const findSpotForCol = (x) => {
   // COMPLETE - TODO: write the real version of this, rather than always returning 0
   for (let y = HEIGHT - 1; y >= 0; y--){ // iterate over column, top to bottom, look for empty y
@@ -73,7 +74,7 @@ const findSpotForCol = (x) => {
 const placeInTable = (y, x) => {
   // COMPLETE - TODO: make a div and insert into correct table cell
   const piece = document.createElement('div'); // create the game play piece (div element)
-  piece.classList.add('piece');
+  piece.classList.add('piece'); // add piece class to apply styling
   (currPlayer === 1) ? piece.classList.add('p1') : piece.classList.add('p2'); // Use ternary operator to apply p1 or p2 class based on currPlayer val
   const cell = document.getElementById(`${y}-${x}`); // grab the table cell by y-x id coordinates built in makeHthmlBoard() 
   cell.append(piece); // append the play piece to the cell
