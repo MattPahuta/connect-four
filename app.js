@@ -17,15 +17,21 @@ const resetButton = document.querySelector('#reset-button');
 // Simple page reset for reload/start over button
 resetButton.addEventListener('click', () => location.reload());
 
+
 // makeBoard function to create in-memory game board structure and determine movement 
 // board = array of rows, each row is array of cells (board[y][x])
 const makeBoard = () => { // convert to arrow function
   // COMPLETE - TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  for (let y = 0; y < HEIGHT; y++) { // loop to build board, y (vertical) axis, 6 arrays
-    // console.log('y is: ', y+1) // log to confirm understanding of y variable, confirm correct num of y (6)
-    board.push(Array.from({ length: WIDTH }));  // Use Array.from method to push horizonal axis
+  // Use nested loop to build inner and outer arrays
+  for (let y=0; y<HEIGHT; y++){ // Outer loop to build board, y (vertical) axis, 6 arrays, global variable HEIGHT
+  // console.log(`y value is:  ${y+1}`) // log to confirm understanding of y variable, confirm correct num of y (6)
+    board.push([]); // push empty array to board for each y iteration
+    for (let x=0; x<WIDTH; x++){ // Inner loop to build x (horizontal axis), global variable WIDTH
+      // console.log(`x value is: ${x+1}`) // log x + 1 to confirm num of x (7)
+      board[y].push(null); // push null to build the grid width
+    }
   }
-};
+}
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 const makeHtmlBoard = () => {
