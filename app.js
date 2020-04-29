@@ -1,34 +1,28 @@
-document.addEventListener('DOMContentLoaded', () => { // Add DOMContentLoaded event listener to wrap all code
+document.addEventListener('DOMContentLoaded', () => { 
   console.log('DOM fully loaded and parsed');
-/** Connect Four
- *
+/* Connect Four ==========================================================
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
 const WIDTH = 7;
 const HEIGHT = 6;
-let currPlayer = 1; // active player: 1 or 2 - Player 1 begins game
+let currPlayer = 1; // Player 1 begins game
 const playerOne = document.querySelector('#player1'); // player 1 div
 const playerTwo = document.querySelector('#player2'); // player 2 div
-console.log(`Current Player is: ${currPlayer}`);
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 const resetButton = document.querySelector('#reset-button');
 // Simple page reset for reload/start over button
 resetButton.addEventListener('click', () => location.reload());
 
-
-// makeBoard function to create in-memory game board structure and determine movement 
 // board = array of rows, each row is array of cells (board[y][x])
 const makeBoard = () => { // convert to arrow function
   // COMPLETE - TODO: set "board" to empty HEIGHT x WIDTH matrix array
   // Use nested loop to build inner and outer arrays
-  for (let y=0; y<HEIGHT; y++){ // Outer loop to build board, y (vertical) axis, 6 arrays, global variable HEIGHT
-  // console.log(`y value is:  ${y+1}`) // log to confirm understanding of y variable, confirm correct num of y (6)
-    board.push([]); // push empty array to board for each y iteration
-    for (let x=0; x<WIDTH; x++){ // Inner loop to build x (horizontal axis), global variable WIDTH
-      // console.log(`x value is: ${x+1}`) // log x + 1 to confirm num of x (7)
-      board[y].push(null); // push null to build the grid width
+  for (let y=0; y<HEIGHT; y++){ 
+    board.push([]); 
+    for (let x=0; x<WIDTH; x++){ 
+      board[y].push(null); 
     }
   }
 }
@@ -38,18 +32,16 @@ const makeHtmlBoard = () => {
   // COMPLETE - TODO: get "htmlBoard" variable from the item in HTML w/ID of "board" 
   const htmlBoard = document.querySelector('#board'); // Get the html element w/ID of 'board', assign to htmlBoard variable
   // COMPLETE - TODO: add comment for this code 
-  const top = document.createElement("tr"); // Create tr element, assign to top variable - Where game pieces will 'drop' from
-  top.setAttribute("id", "column-top"); // Set an ID of 'column-top' to tr(top) element
-  top.addEventListener("click", handleClick); // Add click listener to tr(top) element to call the handleClick function
+  const top = document.createElement("tr"); 
+  top.setAttribute("id", "column-top"); 
+  top.addEventListener("click", handleClick); 
 
-  for (let x = 0; x < WIDTH; x++) { // iterate over the game table rows and cells 
-    // console.log('x is: ', x+1) // log to confirm correct num of x (7)
-    const headCell = document.createElement("td"); // create td elements, assign to headCell variable
+  for (let x = 0; x < WIDTH; x++) { // iterate over the game table rows and cells - to create the td elements of board
+    const headCell = document.createElement("td"); // create td elements
     headCell.setAttribute("id", x); // Add an ID of 0-6 to each headCell
     top.append(headCell); // Append headCell to top(tr)
   }
   htmlBoard.append(top); // Append top(tr) to the htmlBoard(table)
-
   // COMPLETE - TODO: add comment for this code
   for (let y = 0; y < HEIGHT; y++) { // Loop to create row based on HEIGHT variable
     const row = document.createElement("tr"); // Create tr elements, row variable
@@ -60,24 +52,22 @@ const makeHtmlBoard = () => {
     }
     htmlBoard.append(row);  // append rows to htmlBoard (table)
   }
+
 }
 
-
-
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-// Note: This gave me some trouble for sure...
 const findSpotForCol = (x) => {
   // COMPLETE - TODO: write the real version of this, rather than always returning 0
-  for (let y = HEIGHT - 1; y >= 0; y--){ // iterate over column, top to bottom, look for empty y
-    if (!board[y][x]) { // if cell in column false, return y
+  for (let y = HEIGHT - 1; y >= 0; y--){ 
+    if (!board[y][x]) { 
       return y;
     }
   }
-  return null; // return null if column is filled
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
-const placeInTable = (y, x) => {
+const placeInTable = (y, x) => { 
   // COMPLETE - TODO: make a div and insert into correct table cell
   const piece = document.createElement('div'); // create the game play piece (div element)
   piece.classList.add('piece'); // add piece class to apply styling
@@ -107,7 +97,7 @@ const handleClick = (evt) => {
   }
   // place piece in board and add to HTML table
   // COMPLETE - TODO: add line to update in-memory board
-  board[y][x] = currPlayer; // lock in the player piece based on board row coordinates
+  board[y][x] = currPlayer; // update in-memory board
   placeInTable(y, x); // call placeInTable function to update the DOM with piece location
   // check for win
   if (checkForWin()) {
@@ -115,12 +105,12 @@ const handleClick = (evt) => {
   }
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if (board.every(arr => arr.every(cell => cell))){ // test if all array elements are taken
+  if (board.every(arr => arr.every(cell => cell))){
     return endGame('The game is a tie.');
   }
   // switch players
   // COMPLETE - TODO: switch currPlayer 1 <-> 2
-  (currPlayer === 1) ? currPlayer = 2 : currPlayer = 1; // Use ternary function to switch the current player
+  (currPlayer === 1) ? currPlayer = 2 : currPlayer = 1; // Use ternary function to switch the current player after each click
   // Add simple player identiy switching logic:
   if (currPlayer === 2){
     playerOne.classList.remove('active-player');
@@ -130,7 +120,6 @@ const handleClick = (evt) => {
     playerTwo.classList.remove('active-player');
   }
   console.log(`Current Player is: ${currPlayer}`) // log to confirm switch player working properly
-
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -139,7 +128,6 @@ const checkForWin = () => {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
-
     return cells.every(
       ([y, x]) =>
         y >= 0 &&
@@ -149,7 +137,6 @@ const checkForWin = () => {
         board[y][x] === currPlayer
     );
   }
-
   // COMPLETE - TODO: read and understand this code. Add comments to help you.
   // loop to determine if win scenario is achieved 
   for (let y = 0; y < HEIGHT; y++) { // Outer loop through the board columns
@@ -178,6 +165,7 @@ const checkForWin = () => {
         [y + 2, x - 2], 
         [y + 3, x - 3]
       ];
+      // the four arrays above are plugged into the _win function
       // if any of the win conditions are true, return true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
